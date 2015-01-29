@@ -22,3 +22,10 @@
 
 <%= link_to 'Edit', edit_trail_path(@trail) %> |
 <%= link_to 'Back', trails_path %>
+
+<%= javascript_include_tag "http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=Fmjtd%7Cluu8290ynq%2Cbn%3Do5-9470h6" %>
+<%= javascript_include_tag 'directions' %>
+
+<h1>Driving Direction</h1>
+
+<div id="map" style="width:1000px; height:400px;"></div>

@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'main#index'
   get 'main/trail'
-  get 'main/directions'
   get '/login' => 'session#new'
   post '/login' =>  'session#create'
   delete '/logout' => 'session#destroy'
