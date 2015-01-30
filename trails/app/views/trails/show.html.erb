@@ -1,22 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @trail.name %>
-</p>
+<h1>
+  <a href="http://www.everytrail.com/guide/<%= @trail.url %>">
+  <%= @trail.name %></a>
+</h1>
 
-<p>
-  <strong>Url:</strong>
-  <%= @trail.url %>
-</p>
 
-<p>
-<strong>subtitle:</strong>
+<h2>
   <%= @guide['subtitle']%>
-</p>
+</h2>
+
 <p>
-<strong>image:</strong>
-  <%= image_tag @guide['pic_url'] %>
+  <%= image_tag @guide['pic_url'], :style => "width:80%;margin-left:10%; max-height:400px;" %>
+</p>
+<blockquote>
+<p>
+<%= @guide['overview']%>
 </p>
 
 <input id="trail_lat" type="hidden" value="<%=@trail.lat%>">
@@ -25,11 +24,11 @@
 <input id="user_lon" type="hidden" value="<%=@user_coords[:lon]%>">
 
 <%= link_to 'Edit', edit_trail_path(@trail) %> |
-<%= link_to 'Back', trails_path %>
+<%= link_to 'Back', root_url %>
 
 <%= javascript_include_tag "http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=Fmjtd%7Cluu8290ynq%2Cbn%3Do5-9470h6" %>
 <%= javascript_include_tag 'directions' %>
 
-<h1>Driving Direction</h1>
+<h1>Driving Directions</h1>
 
-<div id="map" style="width:1000px; height:400px;"></div>
+<div id="map" style="width:80%; height:400px;"></div>

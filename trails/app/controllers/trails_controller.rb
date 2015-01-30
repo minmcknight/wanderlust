@@ -38,11 +38,14 @@ class TrailsController < ApplicationController
      # go through the many child elements of <guide>   
      guide_xml.children.each do |child| 
         if child.name == 'picture' 
-           @guide['pic_url'] = child.children[0].text 
+           @guide['pic_url'] = child.children[1].text 
         end 
         if child.name == 'subtitle' 
            @guide['subtitle'] = child.text 
         end 
+        if child.name == 'overview'
+          @guide['overview'] = child.text
+        end
      end
   end
 end

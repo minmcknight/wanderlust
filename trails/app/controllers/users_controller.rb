@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
 skip_before_action :authorize
   # GET /users
   # GET /users.json
@@ -8,6 +8,7 @@ skip_before_action :authorize
   # GET /users/1
   # GET /users/1.json
   def show
+    @user = current_user
   end
 
   # GET /users/new
@@ -16,10 +17,11 @@ skip_before_action :authorize
   end
 
   def index
-    @users = User.all
+    @users = [current_user]
   end
   # GET /users/1/edit
   def edit
+    @user=current_user
   end
 
   # POST /users
@@ -61,6 +63,7 @@ end
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @user=current_user
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
