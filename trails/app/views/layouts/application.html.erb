@@ -28,8 +28,13 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <%= javascript_include_tag "jquery.js" %>
+  
+    <!-- Bootstrap Core JavaScript -->
+    <%= javascript_include_tag "bootstrap.min.js" %>
 </head>
 <body>
    <!-- Navigation -->
@@ -43,7 +48,7 @@
           <div class ="login">
             <% if not_logged_in? %>
             <li>
-              <%=form_tag "/login" do %>
+                <%=form_tag "/login" do %>
                 <%= label_tag :email%>
                 <%= text_field_tag :email, params[:email] %>
                 <%= label_tag :password %>
@@ -72,10 +77,7 @@
 
 <!-- <%= render :partial => "layouts/footer"%> -->
 <!-- jQuery -->
-    <%= javascript_include_tag "jquery.js" %>
-  
-    <!-- Bootstrap Core JavaScript -->
-    <%= javascript_include_tag "bootstrap.min.js" %>
+    
 
     <!-- Custom Theme JavaScript -->
     <script>

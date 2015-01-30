@@ -11,14 +11,18 @@
 </p>
 
 <p>
-  <strong>Lat:</strong>
-  <%= @trail.lat %>
+<strong>subtitle:</strong>
+  <%= @guide['subtitle']%>
 </p>
 <p>
-  <strong>Lon:</strong>
-  <%= @trail.lon %>
+<strong>image:</strong>
+  <%= image_tag @guide['pic_url'] %>
 </p>
 
+<input id="trail_lat" type="hidden" value="<%=@trail.lat%>">
+<input id="trail_lon" type="hidden" value="<%=@trail.lon%>">
+<input id="user_lat" type="hidden" value="<%=@user_coords[:lat]%>">
+<input id="user_lon" type="hidden" value="<%=@user_coords[:lon]%>">
 
 <%= link_to 'Edit', edit_trail_path(@trail) %> |
 <%= link_to 'Back', trails_path %>

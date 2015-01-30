@@ -15,9 +15,10 @@ class MainController < ApplicationController
       @user_ip = get_ip
       @coords = get_lat_lon(@user_ip)
       #queries everytrail api based on current location, gets xml string response
-       @response = HTTParty.get("http://www.everytrail.com/api/index/search", :basic_auth => auth, :query => {:lat => @coords[:lat], :lon => @coords[:lon],
-                      :proximity => 25, :limit => 11},
-                      :format => :xml
+       @response = HTTParty.get("http://www.everytrail.com/api/index/search", :basic_auth => auth, :query => {:lat => @coords[:lat], 
+                   :lon => @coords[:lon],
+                   :proximity => 25, :limit => 11},
+                  :format => :xml
                       )
        #parse xml string into an Nokogiri xml document
        doc = Nokogiri.XML(@response.body)
@@ -37,13 +38,16 @@ class MainController < ApplicationController
             if child.name == 'title' 
                guide['title'] = CGI.unescapeHTML(child.text) 
             end 
+            if child.name == 'subtitle'
+               guide['subtitle'] = CGI.unescapeHTML(child.text)
+            end  
             if child.name == 'location' 
                 guide['lat'] = child.attribute('lat')
-                guide['lon'] = child.attribute('lon')         
-            end 
-         end
-         @guides.push(guide)
-      end 
+                guide['lon'] = child.attribute('lon')
+            end      
+          end 
+          @guides.push(guide)
+       end   
   end
 
 
@@ -81,3 +85,4 @@ class MainController < ApplicationController
   end
 
 end
+

@@ -18,4 +18,20 @@ class ApplicationController < ActionController::Base
   def current_user
     User.find(session[:user_id])
   end
+
+  #gets ip of client
+  def get_ip
+    #if client is local (running on localhost) then use a default IP address
+    if request.remote_ip == "::1"
+      return "108.28.24.45" #REPLACE WITH BETTER DEFAULT IP
+    end
+    return request.remote_ip
+  end
+
+  #use freegeoip.net API to get the lat lon associated with an IP address
+  def get_lat_lon(ip)
+    #gets JSON from site
+    response = HTTParty.get("https://freegeoip.net/json/" + ip)
+    return {:lat => response["latitude"], :lon => response["longitude"]}
+  end
 end

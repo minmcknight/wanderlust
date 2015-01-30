@@ -26,7 +26,6 @@
             <% @guides.each do |guide| %>
                 <div class="trail-pic col-md-4">
                     <%= image_tag guide['pic_url'], height:"100", width:"200" %>
-                
                 <p><%= link_to truncate(guide['title'], length: 20) ,new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] )  %></p> 
                 </div>
                 <script>
