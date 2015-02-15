@@ -1,50 +1,37 @@
-
-    <!-- Header -->
-    <header id="top" class="header">
-        <div class="text-vertical-center">
-            <h1 class="animated bounceInDown">Wanderlust</h1>
-            <p class="animated fadeInUpDelay">Find a trail and escape</p>
-            <br>
-            <a href="#about" class="btn btn-dark btn-lg">Depart</a>
-        </div>
-    </header>
-
-     <!-- About -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h1>Find the nearest trails</h1>
-                </div>
-            
-            <!-- /.row -->
-            <div class="trail-info">
-            <script>
-                var markers = []; //will contain list of coordinates
-                var titles = [];  //will contain list of text for bubble popup
-            </script>
-            <% @guides.each do |guide| %>
-                <div class="trail-pic col-md-4">
-                    <%= image_tag guide['pic_url'], height:"100", width:"200" %>
-                <p><%= link_to truncate(guide['title'], length: 20) ,new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] )  %></p> 
-                </div>
-                <script>
-                    titles.push("<%= guide['title'] %>");
-                    markers.push([<%=guide['lat']%>,<%=guide['lon']%>]);
-                </script>
-            <% end %>
-        </div>
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-12 text-center">
+ <%= form_tag(root_url, method: "get") do %>
+  <%= label_tag(:search, "Put in a location:") %>
+  <%= text_field_tag(:search) %>
+  <%= submit_tag("Search") %>
+<% end %>
+</div>
+</div>
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h1>Start your journey..</h1>
     </div>
-    <div id="dir">
-    </div>
-        <!-- /.container -->
-    </section>
-
-    <!-- Map -->
-    <section id="contact" class="mapbox">
-       <div id="map"></div>
-    </section>
-
+  </div>
+  <div class="row">
+    <script>
+      var markers = []; //will contain list of coordinates
+      var titles = [];  //will contain list of text for bubble popup
+    </script>
+    <!-- shows the pics on the main page, and puts the creates the array of markers with lat and lon so we can put it on the map-->
+    <% @guides.each do |guide| %>
+      <div class="trail-pic col-md-12 text-center">
+        <p><%= link_to image_tag(guide['pic_url'], width:"100%")+guide['title'],new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] ), class:"caption"  %></p> 
+       </div>
+       <script>
+         titles.push("<%= guide['title'] %>");
+         markers.push([<%=guide['lat']%>,<%=guide['lon']%>]);
+       </script>
+    <% end %>
+  </div>
+  <div id="map" style="height:400px"></div>
+</div>        <!-- /.container -->
+<!--take the markers array and "L" is a leaflet object and put the title(js variable) on the marker. bindPopup is a leaflet method   -->
     <script>
     var map = L.map('map').setView([<%=@coords[:lat]%>, <%=@coords[:lon]%>], 11);
     map.scrollWheelZoom.disable();
@@ -54,7 +41,7 @@
     }).addTo(map);
     for (var i = 0; i < markers.length; i++) {
         var marker = L.marker(markers[i]).addTo(map);
-        marker.bindPopup("title: " + titles[i]);
+        marker.bindPopup(titles[i]);
     }
     </script>
 

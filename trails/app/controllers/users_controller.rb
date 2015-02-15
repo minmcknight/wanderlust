@@ -1,12 +1,7 @@
 class UsersController < ApplicationController
   
 skip_before_action :authorize
-  # GET /users
-  # GET /users.json
- 
-
-  # GET /users/1
-  # GET /users/1.json
+#only use current_user for security
   def show
     @user = current_user
   end

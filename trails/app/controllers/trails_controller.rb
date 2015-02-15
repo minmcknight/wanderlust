@@ -1,5 +1,13 @@
+
 class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :update, :destroy]
+
+
+  def fix_html(input)
+    temp = input.gsub(/&rsquo;|&lsquo;/,"'")
+    return temp.gsub(/&mdash;/,"-")
+
+  end
 #respond_to :html, :xml, :json, :js
   # GET /trails
   # GET /trails.json
@@ -24,9 +32,16 @@ class TrailsController < ApplicationController
    #Query Everytrail API for URL of this trail
    #should return list of guides, with just one guide in it
    @response = HTTParty.get("http://www.everytrail.com/api/index/search", 
-                              :basic_auth => auth, 
-                              :query => {:q => @trail.url, :limit => 6}, 
-                              :format => :xml)
+          :basic_auth => auth, 
+          :query => {:q => @trail.url, :limit => 1}, 
+          :format => :xml)
+  #@response = HTTParty.get("http://www.everytrail.com/api/guide/data", :basic_auth => auth, :query => {
+   # :username => "75df33276084418f8882f59ba135cddd",
+   # :password => "60ed78c6c060ee94",
+   # :url => CGI.escape('"' + @trail.title + '"'),
+   # :enabled_types => "1",
+   # :version => "3"})
+   puts CGI.escape('"' + @trail.url + '"')
    #parse XML string into XML object with Nokogiri
    doc = Nokogiri.XML(@response.body)
    #search XML object for the Guides element
@@ -41,10 +56,10 @@ class TrailsController < ApplicationController
            @guide['pic_url'] = child.children[1].text 
         end 
         if child.name == 'subtitle' 
-           @guide['subtitle'] = child.text 
+           @guide['subtitle'] = HTMLEntities.new.decode(fix_html(child.text))
         end 
         if child.name == 'overview'
-          @guide['overview'] = child.text
+          @guide['overview'] = HTMLEntities.new.decode(fix_html(child.text))
         end
      end
   end
@@ -53,11 +68,17 @@ end
 
   # GET /trails/new
   def new
-    @trail = Trail.new
-    @trail.url = params[:url]
-    @trail.name = params[:title]
-    @trail.lon = params[:lon]
-    @trail.lat = params[:lat]
+    @trail = Trail.where(url: params[:url]).first
+    if @trail.nil?
+      @trail = Trail.new
+      @trail.url = params[:url]
+      @trail.name = params[:title]
+      @trail.lon = params[:lon]
+      @trail.lat = params[:lat]
+      @trail.save
+    end
+    redirect_to @trail
+
   end
 
   # GET /trails/1/edit

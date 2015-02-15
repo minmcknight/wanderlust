@@ -1,71 +1,56 @@
  <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Trails</title>
 
     <!-- Bootstrap Core CSS -->
     <%= stylesheet_link_tag "bootstrap.min.css" %>
-
-    <!-- Custom CSS -->
-    <!-- <%= stylesheet_link_tag "stylish-portfolio.scss" %> -->
-    <%= stylesheet_link_tag "animate.css" %>
-    <%= stylesheet_link_tag "search.css" %>
+    <%= stylesheet_link_tag "application", media: "all"%>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> 
 
-    <%= javascript_include_tag "modernizr.custom.js" %>
-
-    <!-- Custom Fonts -->
-   <!-- MISSING FILE <%= stylesheet_link_tag "font-awesome.min.css" %>  -->
-   <%= stylesheet_link_tag'http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' %>
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
+<!-- LEAFLETjs API  -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-  <%= javascript_include_tag "jquery.js" %>
-  
+  <%= javascript_include_tag "application" %> 
     <!-- Bootstrap Core JavaScript -->
-    <%= javascript_include_tag "bootstrap.min.js" %>
+  <%= javascript_include_tag "bootstrap.min.js" %>
 </head>
 <body>
-   <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
-    <nav id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li class="sidebar-brand">
-                <h4><%= link_to 'Wanderlust', root_url%></h4>
-            </li>
-          <div class ="login">
-            <% if not_logged_in? %>
-            <li>
-                <%=form_tag "/login" do %>
-                <%= label_tag :email%>
-                <%= text_field_tag :email, params[:email] %>
-                <%= label_tag :password %>
-                <%= password_field_tag :password %>
-            </li>
-            <li>
-                <%= submit_tag "Sign in", class: "btn btn-large btn-primary" %>
-            </li>
-              <%end%>
-            <%else%>
-
-            <li><a href="#">Hello, <%= current_user.name%></a>
-            </li>
-            <li>
-              <%= link_to "Logout", "/logout", method: :delete%>
-            </li>
-            <%end%>
+ 
+<nav class= "navbar navbar-inverse">
+    <ul class="nav navbar-nav">
+    <li>
+      <h4><%= link_to 'Wanderlust', root_url %></h4>
+    </li>
+        <% if not_logged_in? %>
+        <li>
+          <div class ="navbar-form">
+            <%=form_tag "/login" do %>
+            <%= label_tag :email%>
+            <%= text_field_tag :email, params[:email] %>
+            
+            <%= label_tag :password %>
+            <%= password_field_tag :password %>
+            <%= submit_tag "Sign in", class: "btn btn-large btn-primary" %>
+           <%end%>
+          </div>
+        </li>
+        <%else%>
+          <li><a href="#">Hello, <%= current_user.name%></a>
+          </li>
+          <li>
+            <%= link_to "Logout", logout_path, method: :delete%>
+          </li>
+        <%end%>
             <li>
             <%=link_to "Create account", "/users/new" %>
             </li>
@@ -74,41 +59,6 @@
     </nav>
   
 <%= yield %>
-
-<!-- <%= render :partial => "layouts/footer"%> -->
-<!-- jQuery -->
-    
-
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    </script>
+  
 </body>
 </html>
