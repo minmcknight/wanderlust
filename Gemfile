@@ -28,6 +28,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
 gem 'nokogiri'
 gem 'htmlentities'
+gem 'rails_12factor'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
