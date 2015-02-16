@@ -38,10 +38,15 @@ h3 a{
   line-height: 2em;
   text-decoration: none;
 }
+
+.logo a:visited {
+  color: #999;
+}
 a:hover{
   text-decoration: none;
 }
 
-.navbar-form{
+.navbar-form label{
+  color: #999;
 
 } 
