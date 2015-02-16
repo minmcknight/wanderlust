@@ -1,15 +1,18 @@
 <div class="container">
 <p id="notice"><%= notice %></p>
 
+<div id="title">
 <h1>
   <a href="http://www.everytrail.com/guide/<%= @trail.url %>">
   <%= @trail.name %></a>
 </h1>
+</div>
 
-
+<div id="subtitle">
 <h2>
   <%= @guide['subtitle']%>
 </h2>
+</div>
 
 <p>
   <%= image_tag @guide['pic_url'], :style => "max-width:80%;margin-left:10%; max-height:400px;" %>

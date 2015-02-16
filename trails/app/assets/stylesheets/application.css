@@ -14,12 +14,34 @@
  *= require_self
  */
 body{
-  background-color: #ddddee;
+  background-color: #D2D3D6;
   margin:0;
   padding: 0;
 }
 
+h3 a{
+   text-decoration: none;
+   font-size: 3em;
+}
 .container-fluid{
   margin:0;
   padding: 0;
 }
+
+.panel-footer{
+ background-color: #9d9d9d;
+ color: #666;
+}
+
+.logo{
+  font-size: 2em;
+  line-height: 2em;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
+}
+
+.navbar-form{
+
+} 
