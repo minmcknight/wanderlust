@@ -33,22 +33,18 @@ class TrailsController < ApplicationController
    #should return list of guides, with just one guide in it
    @response = HTTParty.get("http://www.everytrail.com/api/index/search", 
           :basic_auth => auth, 
-          :query => {:q => @trail.url, :limit => 1}, 
+          :query => {:q => @trail.name}, 
           :format => :xml)
-  #@response = HTTParty.get("http://www.everytrail.com/api/guide/data", :basic_auth => auth, :query => {
-   # :username => "75df33276084418f8882f59ba135cddd",
-   # :password => "60ed78c6c060ee94",
-   # :url => CGI.escape('"' + @trail.title + '"'),
-   # :enabled_types => "1",
-   # :version => "3"})
-   puts CGI.escape('"' + @trail.url + '"')
+ 
    #parse XML string into XML object with Nokogiri
    doc = Nokogiri.XML(@response.body)
    #search XML object for the Guides element
    guides_xml = doc.xpath('//guides')
    #create a new hash to hold the guide info
    @guide ={}
-   #go to the one guide that is in the guides list
+   #initialize variable to see if we found the guide yet
+   found = false
+   #loop over each guide in the list
    guides_xml.children.each do |guide_xml|  
      # go through the many child elements of <guide>   
      guide_xml.children.each do |child| 
@@ -61,7 +57,18 @@ class TrailsController < ApplicationController
         if child.name == 'overview'
           @guide['overview'] = HTMLEntities.new.decode(fix_html(child.text))
         end
+        #when we find the item in the search results with the matching
+        #url set the found var to true so that we can break out of the loop
+        if child.name == 'url'
+          if child.text == @trail.url
+            found = true
+          end
+        end
      end
+     if found
+       break #break out of the loop because we found the right search result
+     end
+
   end
 end
 

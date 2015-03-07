@@ -23,7 +23,7 @@ skip_before_action :authorize
   # POST /users.json
   def show
   @user = User.find(params[:id])
- 
+  
 
 end
   def create

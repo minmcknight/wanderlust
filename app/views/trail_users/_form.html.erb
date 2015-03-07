@@ -1,0 +1,26 @@
+<%= form_for(@trail_user) do |f| %>
+  <% if @trail_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trail_user.errors.count, "error") %> prohibited this trail_user from being saved:</h2>
+
+      <ul>
+      <% @trail_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :trail_id %>
+  Testing: <%= @trail_user.trail_id %>
+  <div class="field">
+    <%= f.label :comment%><br>
+    <%= f.text_field :comment %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br>
+    <%= f.text_field :rating %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Favorite this trail" %>
+  </div>
+<% end %>

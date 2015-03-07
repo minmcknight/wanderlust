@@ -21,7 +21,9 @@
     <!-- shows the pics on the main page, and puts the creates the array of markers with lat and lon so we can put it on the map-->
     <% @guides.each do |guide| %>
       <div class="trail-pic col-md-12 text-center">
-        <p><%= link_to image_tag(guide['pic_url'], width:"100%")+guide['title'],new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] ), class:"caption"  %></p> 
+        <%= link_to image_tag(guide['pic_url']),new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] ), class:"caption" %>
+        <p>
+           <%=link_to guide['title'],new_trail_path(url: guide['url'], title: guide['title'], lat: guide['lat'],lon: guide['lon'] ), class:"caption"  %></p> 
        </div>
        <script>
          titles.push("<%= guide['title'] %>");

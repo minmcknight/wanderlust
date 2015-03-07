@@ -1,5 +1,5 @@
 class TrailUser < ActiveRecord::Base
-  belongs_to :User
-  belongs_to :Trail
+  belongs_to :user
+  belongs_to :trail
 
 end

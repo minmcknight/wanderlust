@@ -5,26 +5,15 @@
   <%= @user.name %>
 </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<h3> My favorite trails </h3>
+<% @user.trail_users.each do |trail_user| %>
+  <p>
+    <%= link_to trail_user.trail.name, trail_user.trail %>,
+    Rating: <%= trail_user.rating %>,
+    Comment: <%= trail_user.comment %>
 
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @user.state %>
-</p>
-
-<p>
-  <strong>Zipcode:</strong>
-  <%= @user.zipcode %>
-</p>
-
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', root_url %>

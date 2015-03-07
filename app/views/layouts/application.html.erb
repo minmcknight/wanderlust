@@ -46,7 +46,7 @@
           </div>
         </li>
         <%else%>
-          <li><a href="#">Hello, <%= current_user.name%></a>
+          <li><%= link_to "Hello, "+ current_user.name, current_user%>
           </li>
           <li>
             <%= link_to "Logout", logout_path, method: :delete%>
@@ -59,8 +59,9 @@
         </ul>
     </div>
     </nav>
-  
+<div class="container">
 <%= yield %>
+</div>
   <hr />
  
 <!-- Site footer -->

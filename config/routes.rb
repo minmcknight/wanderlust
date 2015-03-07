@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'users/new', as: :sign_up
   resources :users 
   resources :trails
+  resources :trail_users
   
   
 

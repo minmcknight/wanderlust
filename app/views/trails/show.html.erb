@@ -7,7 +7,7 @@
   <%= @trail.name %></a>
 </h1>
 </div>
-
+<%= link_to "Favorite", new_trail_user_path(:trail_id => @trail.id) %>
 <div id="subtitle">
 <h2>
   <%= @guide['subtitle']%>
@@ -22,6 +22,14 @@
 <%= @guide['overview']%>
 </p>
 </blockquote>
+<h3>Users that have favorited this trail</h3>
+<% @trail.trail_users.each do |trail_user| %>
+  <p>
+    <%= link_to trail_user.user.name, trail_user.user %>,
+    Rating: <%= trail_user.rating %>, 
+    Comment: <%= trail_user.comment %>
+  </p>
+<% end %>
 
 <input id="trail_lat" type="hidden" value="<%=@trail.lat%>">
 <input id="trail_lon" type="hidden" value="<%=@trail.lon%>">
