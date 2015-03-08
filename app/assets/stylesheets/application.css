@@ -27,6 +27,11 @@ h3 a{
    text-decoration: none;
    font-size: 3em;
 }
+
+#nav-div {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 .container-fluid{
   margin:0;
   padding: 0;

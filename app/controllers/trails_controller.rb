@@ -29,47 +29,54 @@ class TrailsController < ApplicationController
            username: "75df33276084418f8882f59ba135cddd",
            password: "60ed78c6c060ee94"
          }
-   #Query Everytrail API for URL of this trail
-   #should return list of guides, with just one guide in it
-   @response = HTTParty.get("http://www.everytrail.com/api/index/search", 
-          :basic_auth => auth, 
-          :query => {:q => @trail.name}, 
-          :format => :xml)
- 
-   #parse XML string into XML object with Nokogiri
-   doc = Nokogiri.XML(@response.body)
-   #search XML object for the Guides element
-   guides_xml = doc.xpath('//guides')
-   #create a new hash to hold the guide info
-   @guide ={}
-   #initialize variable to see if we found the guide yet
-   found = false
-   #loop over each guide in the list
-   guides_xml.children.each do |guide_xml|  
-     # go through the many child elements of <guide>   
-     guide_xml.children.each do |child| 
-        if child.name == 'picture' 
-           @guide['pic_url'] = child.children[1].text 
-        end 
-        if child.name == 'subtitle' 
-           @guide['subtitle'] = HTMLEntities.new.decode(fix_html(child.text))
-        end 
-        if child.name == 'overview'
-          @guide['overview'] = HTMLEntities.new.decode(fix_html(child.text))
-        end
-        #when we find the item in the search results with the matching
-        #url set the found var to true so that we can break out of the loop
-        if child.name == 'url'
-          if child.text == @trail.url
-            found = true
-          end
-        end
-     end
-     if found
-       break #break out of the loop because we found the right search result
-     end
 
-  end
+  #create a new hash to hold the guide info
+  @guide ={}
+  begin
+     #Query Everytrail API for URL of this trail
+     #should return list of guides, with just one guide in it
+     @response = HTTParty.get("http://www.everytrail.com/api/index/search", 
+            :basic_auth => auth, 
+            :query => {:q => @trail.name}, 
+            :format => :xml,
+            :timeout => 10)
+   
+     #parse XML string into XML object with Nokogiri
+     doc = Nokogiri.XML(@response.body)
+     #search XML object for the Guides element
+     guides_xml = doc.xpath('//guides')
+     
+     #initialize variable to see if we found the guide yet
+     found = false
+     #loop over each guide in the list
+     guides_xml.children.each do |guide_xml|  
+       # go through the many child elements of <guide>   
+       guide_xml.children.each do |child| 
+          if child.name == 'picture' 
+             @guide['pic_url'] = child.children[1].text 
+          end 
+          if child.name == 'subtitle' 
+             @guide['subtitle'] = HTMLEntities.new.decode(fix_html(child.text))
+          end 
+          if child.name == 'overview'
+            @guide['overview'] = HTMLEntities.new.decode(fix_html(child.text))
+          end
+          #when we find the item in the search results with the matching
+          #url set the found var to true so that we can break out of the loop
+          if child.name == 'url'
+            if child.text == @trail.url
+              found = true
+            end
+          end
+       end
+       if found
+         break #break out of the loop because we found the right search result
+       end
+
+    end
+  rescue Net::OpenTimeout, Net::ReadTimeout
+     @error_msg = "EveryTrail API too slow at the moment...try again later"
+  end 
 end
 
 

@@ -5,7 +5,7 @@
   <%= @user.name %>
 </p>
 
-<h3> My favorite trails </h3>
+<h3> My favorite trails or guides </h3>
 <% @user.trail_users.each do |trail_user| %>
   <p>
     <%= link_to trail_user.trail.name, trail_user.trail %>,

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   def get_ip
     #if client is "local=::1" (running on localhost) then use a default IP address, otherwise use remote
     if request.remote_ip == "::1"
-      return "108.28.24.45" #REPLACE WITH BETTER DEFAULT IP
+      return "164.82.9.60" #REPLACE WITH BETTER DEFAULT IP
     end
     return request.remote_ip
   end

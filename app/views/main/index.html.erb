@@ -1,16 +1,17 @@
 <div class="container-fluid">
-<div class="row">
-<div class="col-lg-12 text-center">
- <%= form_tag(root_url, method: "get") do %>
-  <%= label_tag(:search, "Put in a location:") %>
-  <%= text_field_tag(:search) %>
-  <%= submit_tag("Search") %>
-<% end %>
-</div>
-</div>
+
   <div class="row">
     <div class="col-lg-12 text-center">
-      <h1>Start your journey...</h1>
+      <h1>Trails and Guides within 25 miles of 
+          <% if @search_query %>
+            <%=@search_query%>
+        <% else %>
+            your current location 
+        <% end %>
+      </h1>
+      <% if @error_msg %>
+        <h2> <%=@error_msg%></h2>
+      <% end %>
     </div>
   </div>
   <div class="row">

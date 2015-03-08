@@ -6,8 +6,12 @@
   <a href="http://www.everytrail.com/guide/<%= @trail.url %>">
   <%= @trail.name %></a>
 </h1>
+<% if @error_msg %>
+        <h2> <%=@error_msg%></h2>
+<% end %>
 </div>
-<%= link_to "Favorite", new_trail_user_path(:trail_id => @trail.id) %>
+
+<%= link_to "<span class='glyphicon glyphicon-heart' aria-hidden='true'></span>".html_safe + "Favorite", new_trail_user_path(:trail_id => @trail.id) %>
 <div id="subtitle">
 <h2>
   <%= @guide['subtitle']%>
@@ -22,7 +26,7 @@
 <%= @guide['overview']%>
 </p>
 </blockquote>
-<h3>Users that have favorited this trail</h3>
+<h3>Users that have favorited this trail or guide</h3>
 <% @trail.trail_users.each do |trail_user| %>
   <p>
     <%= link_to trail_user.user.name, trail_user.user %>,
@@ -30,13 +34,5 @@
     Comment: <%= trail_user.comment %>
   </p>
 <% end %>
-
-<input id="trail_lat" type="hidden" value="<%=@trail.lat%>">
-<input id="trail_lon" type="hidden" value="<%=@trail.lon%>">
-<input id="user_lat" type="hidden" value="<%=@user_coords[:lat]%>">
-<input id="user_lon" type="hidden" value="<%=@user_coords[:lon]%>">
-
-<%= link_to 'Edit', edit_trail_path(@trail) %> |
-<%= link_to 'Back', root_url %>
 
 </div>
